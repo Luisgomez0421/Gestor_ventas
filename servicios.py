@@ -36,9 +36,9 @@ def actualizar_producto(inventario, nombre, nuevo_precio=None, nueva_cantidad=No
     """
     producto = buscar_producto(inventario, nombre)
     if producto:
-        if nuevo_precio is not None:
+        if nuevo_precio is not None and nuevo_precio >= 0:
             producto["precio"] = nuevo_precio
-        if nueva_cantidad is not None:
+        if nueva_cantidad is not None and nueva_cantidad >= 0:
             producto["cantidad"] = nueva_cantidad
         return True
     return False

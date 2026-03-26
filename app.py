@@ -8,6 +8,9 @@ while True:
     
     try:
         opcion = int(input("Seleccione una opción: "))
+        if opcion < 1 or opcion > 9:
+            print("Opción fuera de rango.")
+            continue
     except:
         print("Opción inválida.")
         continue
@@ -30,7 +33,10 @@ while True:
     elif opcion == 3:
         nombre = input("Buscar: ")
         p = buscar_producto(inventario, nombre)
-        print(p if p else "No encontrado.")
+        if p:
+            print(f"Producto: {p['nombre']} | Precio: {p['precio']} | Cantidad: {p['cantidad']}")
+        else:
+            print("Producto no encontrado.")
 
     elif opcion == 4:
         nombre = input("Actualizar: ")
@@ -55,7 +61,10 @@ while True:
     elif opcion == 6:
         stats = calcular_estadisticas(inventario)
         if stats:
-            print(stats)
+            print(f"Unidades totales: {stats['unidades_totales']}")
+            print(f"Valor total: {stats['valor_total']}")
+            print(f"Producto más caro: {stats['producto_mas_caro']}")
+            print(f"Producto mayor stock: {stats['producto_mayor_stock']}")
         else:
             print("Inventario vacío.")
 
@@ -70,6 +79,7 @@ while True:
             decision = input("¿Sobrescribir inventario? (S/N): ").lower()
             if decision == "s":
                 inventario = datos
+                print("Acción: sobrescritura")
             else:
                 for nuevo in datos:
                     existente = buscar_producto(inventario, nuevo["nombre"])
@@ -78,10 +88,12 @@ while True:
                         existente["precio"] = nuevo["precio"]
                     else:
                         inventario.append(nuevo)
+                print("Acción: fusión")
 
     elif opcion == 9:
         print("Saliendo...")
         break
 
-    else:
-        print("Opción inválida.")
+# Este programa permite gestionar un inventario con operaciones CRUD,
+# calcular estadísticas y guardar/cargar datos desde archivos CSV,
+# manteniendo la persistencia entre sesiones.

@@ -32,7 +32,7 @@ def cargar_csv(ruta):
             reader = csv.reader(archivo)
             header = next(reader, None)
 
-            if header != ["nombre", "precio", "cantidad"]:
+            if [h.strip().lower() for h in header] != ["nombre", "precio", "cantidad"]:
                 print("Encabezado inválido.")
                 return []
 

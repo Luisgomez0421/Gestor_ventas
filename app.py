@@ -3,17 +3,22 @@ from archivos import *
 
 inventario = []
 
-while True:
+
+def mostrar_menu():
     print("\n1. Agregar\n2. Mostrar\n3. Buscar\n4. Actualizar\n5. Eliminar\n6. Estadísticas\n7. Guardar CSV\n8. Cargar CSV\n9. Salir")
-    
+
+
+def ejecutar():
+    mostrar_menu()
+
     try:
         opcion = int(input("Seleccione una opción: "))
         if opcion < 1 or opcion > 9:
             print("Opción fuera de rango.")
-            continue
+            return ejecutar()
     except:
         print("Opción inválida.")
-        continue
+        return ejecutar()
 
     if opcion == 1:
         nombre = input("Nombre: ")
@@ -22,8 +27,8 @@ while True:
             cantidad = int(input("Cantidad: "))
             if precio < 0 or cantidad < 0:
                 print("Valores no negativos.")
-                continue
-            agregar_producto(inventario, nombre, precio, cantidad)
+            else:
+                agregar_producto(inventario, nombre, precio, cantidad)
         except:
             print("Error en datos.")
 
@@ -78,7 +83,8 @@ while True:
         if datos:
             decision = input("¿Sobrescribir inventario? (S/N): ").lower()
             if decision == "s":
-                inventario = datos
+                inventario.clear()
+                inventario.extend(datos)
                 print("Acción: sobrescritura")
             else:
                 for nuevo in datos:
@@ -92,8 +98,10 @@ while True:
 
     elif opcion == 9:
         print("Saliendo...")
-        break
+        return
 
-# Este programa permite gestionar un inventario con operaciones CRUD,
-# calcular estadísticas y guardar/cargar datos desde archivos CSV,
-# manteniendo la persistencia entre sesiones.
+    return ejecutar()
+
+
+
+ejecutar()
